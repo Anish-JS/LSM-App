@@ -8,6 +8,7 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import { ToastProvider } from "@/components/providers/toaster-providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +24,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <ToastProvider />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
