@@ -12,35 +12,30 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
+import { ToastProvider } from "@/components/providers/toaster-providers";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
+import { Course } from "@prisma/client";
+import { formatPrice } from "@/lib/format";
 
-import { Attachment, Course } from "@prisma/client";
-import { Combobox } from "@/components/ui/combobox";
-
-interface CategoryFormProps {
+interface PriceFormProps {
   initialData: Course;
   courseId: string;
-  options: { label: string; value: string }[];
 }
 
 const formSchema = z.object({
-  categoryId: z.string().min(1),
+  price: z.coerce.number(),
 });
 
-export const CategoryForm = ({
-  initialData,
-  courseId,
-  options,
-}: CategoryFormProps) => {
+export const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { categoryId: initialData?.categoryId || "" },
+    defaultValues: { price: initialData?.price || undefined },
   });
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
@@ -51,7 +46,6 @@ export const CategoryForm = ({
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // console.log(values);
-    console.log(options);
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated successfully");
@@ -61,21 +55,18 @@ export const CategoryForm = ({
       toast.error("Something went wrong");
     }
   };
-  const selectedOption = options.find(
-    (option) => option.value === initialData.categoryId
-  );
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Category
+        Course Price
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Category
+              Edit Price
             </>
           )}
         </Button>
@@ -84,10 +75,10 @@ export const CategoryForm = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !initialData.categoryId && "text-slate-500 italic"
+            !initialData.price && "text-slate-500 italic"
           )}
         >
-          {selectedOption?.label || "No category"}
+          {initialData.price ? formatPrice(initialData.price) : "No price"}
         </p>
       )}
       {isEditing && (
@@ -95,17 +86,22 @@ export const CategoryForm = ({
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name="categoryId"
+              name="price"
               render={({ field }) => {
                 return (
-                  <>
-                    <FormItem>
-                      <FormControl>
-                        <Combobox {...field} options={...options} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </>
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        className="bg-slate-30"
+                        type="number"
+                        disabled={isSubmitting}
+                        step="0.01"
+                        placeholder="Set a price to your course"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
                 );
               }}
             />
