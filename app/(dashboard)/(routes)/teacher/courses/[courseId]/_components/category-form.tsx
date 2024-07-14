@@ -51,7 +51,7 @@ export const CategoryForm = ({
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // console.log(values);
-    console.log(options);
+    // console.log(options);
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated successfully");
