@@ -11,8 +11,9 @@ import {
   FormItem,
   FormMessage,
   FormControl,
+  FormDescription,
 } from "@/components/ui/form";
-
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
@@ -20,27 +21,29 @@ import toast from "react-hot-toast";
 
 import { cn } from "@/lib/utils";
 
-import { Attachment, Course } from "@prisma/client";
-import { Combobox } from "@/components/ui/combobox";
+import { Chapter } from "@prisma/client";
+import { Editor } from "@/components/editor";
+import { Preview } from "@/components/preview";
+import { Checkbox } from "@/components/ui/checkbox";
 
-interface CategoryFormProps {
-  initialData: Course;
+interface ChapterAccessFormProps {
+  initialData: Chapter;
   courseId: string;
-  options: { label: string; value: string }[];
+  chapterId: string;
 }
 
 const formSchema = z.object({
-  categoryId: z.string().min(1),
+  isFree: z.boolean().default(false),
 });
 
-export const CategoryForm = ({
+export const ChapterAccessForm = ({
   initialData,
   courseId,
-  options,
-}: CategoryFormProps) => {
+  chapterId,
+}: ChapterAccessFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { categoryId: initialData?.categoryId || "" },
+    defaultValues: { isFree: !!initialData.isFree },
   });
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
@@ -51,43 +54,47 @@ export const CategoryForm = ({
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // console.log(values);
-    // console.log(options);
     try {
-      await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course updated successfully");
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
+      toast.success("Chapter updated successfully");
       toggleEdit();
       router.refresh();
     } catch {
       toast.error("Something went wrong");
     }
   };
-  const selectedOption = options.find(
-    (option) => option.value === initialData.categoryId
-  );
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Category
+        Chapter Access
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Category
+              Edit Access
             </>
           )}
         </Button>
       </div>
+      <div>{/* <Checkbox /> */}</div>
       {!isEditing && (
         <p
           className={cn(
-            "text-sm mt-2",
-            !initialData.categoryId && "text-slate-500 italic"
+            "text-sm",
+            !initialData.isFree && "text-slate-500 italic"
           )}
         >
-          {selectedOption?.label || "No category"}
+          {initialData.isFree ? (
+            <>This chapter is free for preview</>
+          ) : (
+            <>This chapter is not free</>
+          )}
         </p>
       )}
       {isEditing && (
@@ -95,17 +102,23 @@ export const CategoryForm = ({
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name="categoryId"
+              name="isFree"
               render={({ field }) => {
                 return (
-                  <>
-                    <FormItem>
-                      <FormControl>
-                        {/* <Combobox {...field} options={...options} /> */}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </>
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormDescription>
+                        Check this box if you want to make this chapter free for
+                        preview
+                      </FormDescription>
+                    </div>
+                  </FormItem>
                 );
               }}
             />
