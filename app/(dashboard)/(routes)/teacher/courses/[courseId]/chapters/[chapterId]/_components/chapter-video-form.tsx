@@ -102,7 +102,7 @@ export const ChapterVideoForm = ({
       {initialData.videoUrl && !isEditing && (
         <div className="text-xs text-muted-foreground mt-2">
           Videos can take a few minutes to process. Refresh the page if video
-          doesn't appear{" "}
+          doesn&apost;t appear{" "}
         </div>
       )}
     </div>
