@@ -59,6 +59,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `(${completedFields}/${totalFields})`;
+  const isComplete = requiredFields.every(Boolean);
   return (
     <div className="p-6">
       <div className="flex justify-between items-center">
