@@ -96,18 +96,16 @@ export const CategoryForm = ({
             <FormField
               control={form.control}
               name="categoryId"
-              render={({ field }) => {
-                return (
-                  <>
-                    <FormItem>
-                      <FormControl>
-                        {/* <Combobox {...field} options={...options} /> */}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </>
-                );
-              }}
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormControl>
+                      {/* <Combobox {...field} options={...options} /> */}
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </>
+              )}
             />
             <div className="flex item-center gap-x-2 mt-2">
               <Button disabled={isSubmitting || !isValid} type="submit">
