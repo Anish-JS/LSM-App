@@ -19,13 +19,14 @@ import {
 } from "@/components/ui/popover";
 
 interface ComboboxProps {
-  options: { label: string; value: string }[];
+  options?: { label: string; value: string }[] | undefined;
   value?: string;
   onChange: (value: string) => void;
 }
 export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false);
   //   const [value, setValue] = React.useState("");
+  // console.log(options.map((option) => option));
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -37,7 +38,7 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
           className="w-full justify-between"
         >
           {value
-            ? options.find((option) => option.value === value)?.label
+            ? options?.find((option) => option.value === value)?.label
             : "Select option..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -47,10 +48,9 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
           <CommandInput placeholder="Search option..." />
           <CommandEmpty>No option found.</CommandEmpty>
           <CommandGroup>
-            {options.map((option) => (
+            {options?.map((option) => (
               <CommandItem
                 key={option.value}
-                // value={option.value}
                 onSelect={() => {
                   onChange(option.value === value ? "" : option.value);
                   setOpen(false);

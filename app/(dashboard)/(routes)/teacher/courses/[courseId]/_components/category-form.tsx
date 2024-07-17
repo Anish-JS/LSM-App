@@ -45,6 +45,7 @@ export const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     setIsEditing((current) => !current);
+    // console.log([...options]);
   };
   const router = useRouter();
 
@@ -100,7 +101,9 @@ export const CategoryForm = ({
                 <>
                   <FormItem>
                     <FormControl>
-                      {/* <Combobox {...field} options={...options} /> */}
+                      <div>
+                        {/* <Combobox {...field} options={...options} /> */}
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
