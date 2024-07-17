@@ -9,6 +9,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { ToastProvider } from "@/components/providers/toaster-providers";
+import { ConfettiProvider } from "@/components/providers/confett-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
+          <ConfettiProvider />
           <ToastProvider />
           {children}
         </body>

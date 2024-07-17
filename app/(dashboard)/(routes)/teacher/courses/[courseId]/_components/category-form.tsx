@@ -45,6 +45,7 @@ export const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     setIsEditing((current) => !current);
+    // console.log([...options]);
   };
   const router = useRouter();
 
@@ -96,18 +97,18 @@ export const CategoryForm = ({
             <FormField
               control={form.control}
               name="categoryId"
-              render={({ field }) => {
-                return (
-                  <>
-                    <FormItem>
-                      <FormControl>
+              render={({ field }) => (
+                <>
+                  <FormItem>
+                    <FormControl>
+                      <div>
                         {/* <Combobox {...field} options={...options} /> */}
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  </>
-                );
-              }}
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </>
+              )}
             />
             <div className="flex item-center gap-x-2 mt-2">
               <Button disabled={isSubmitting || !isValid} type="submit">
