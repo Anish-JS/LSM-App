@@ -32,7 +32,7 @@ export const CourseSidebar = async ({
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
       <div className="p-8 flex flex-col border-b">
-        <h1 className="font-semibold">{course.title}</h1>
+        <h1 className="font-bold">{course.title}</h1>
         {/* Check purchase and add progress */}
       </div>
       <div className="flex flex-col w-full">
