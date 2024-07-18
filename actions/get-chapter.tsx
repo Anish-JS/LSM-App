@@ -43,7 +43,7 @@ export const getChapter = async ({
     }
 
     let muxData = null;
-    let attachments: Attachment[] = [];
+    let attachments: Attachment[] | [] = [];
     let nextChapter: Chapter | null = null;
 
     if (purchase) {
