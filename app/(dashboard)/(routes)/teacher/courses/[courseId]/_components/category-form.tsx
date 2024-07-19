@@ -12,6 +12,15 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
@@ -54,6 +63,7 @@ export const CategoryForm = ({
     // console.log(values);
     // console.log(options);
     try {
+      console.log("Submitted");
       await axios.patch(`/api/courses/${courseId}`, values);
       toast.success("Course updated successfully");
       toggleEdit();
@@ -101,8 +111,27 @@ export const CategoryForm = ({
                 <>
                   <FormItem>
                     <FormControl>
-                      <div>
-                        {/* <Combobox {...field} options={...options} /> */}
+                      <div {...field}>
+                        {/* <Combobox {...field} options={[...options]} /> */}
+                        <Select>
+                          <SelectTrigger className="w-full bg-slate-50">
+                            <SelectValue placeholder="Select a category" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Categories</SelectLabel>
+                              {options.map((option) => (
+                                <SelectItem
+                                  value={option.value}
+                                  key={option.value}
+                                  className="cursor-pointer"
+                                >
+                                  {option.label}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </FormControl>
                     <FormMessage />
