@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { isTeacher } from "@/lib/teacher";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -9,7 +10,8 @@ export async function POST(
   try {
     const { userId } = auth();
     const { title } = await req.json();
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    if (!userId || !isTeacher(userId))
+      return new NextResponse("Unauthorized", { status: 401 });
 
     const courseOwner = await db.course.findUnique({
       where: {
@@ -26,7 +28,7 @@ export async function POST(
       orderBy: { position: "desc" },
     });
 
-    const newPosition = lastChapter ? lastChapter.position : 1;
+    const newPosition = lastChapter ? lastChapter.position + 1 : 1;
     const chapter = await db.chapter.create({
       data: { title: title, courseId: params.courseId, position: newPosition },
     });
