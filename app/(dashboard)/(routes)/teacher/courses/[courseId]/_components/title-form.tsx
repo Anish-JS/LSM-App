@@ -34,6 +34,13 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
+
+  const wordsOfTitle = initialData.title.toString().split(" ");
+  let strTitle = "";
+  wordsOfTitle.forEach((word) => {
+    strTitle += word[0].toUpperCase() + word.slice(1) + " ";
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const toggleEdit = () => {
     setIsEditing((current) => !current);
@@ -68,7 +75,7 @@ export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
           )}
         </Button>
       </div>
-      {!isEditing && <p className="text-sm mt-2">{initialData.title}</p>}
+      {!isEditing && <p className="text-sm mt-2">{strTitle}</p>}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

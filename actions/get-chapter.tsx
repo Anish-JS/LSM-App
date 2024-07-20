@@ -69,8 +69,6 @@ export const getChapter = async ({
       });
     }
 
-    console.log(course, chapter);
-
     const userProgress = await db.userProgress.findUnique({
       where: {
         userId_chapterId: {

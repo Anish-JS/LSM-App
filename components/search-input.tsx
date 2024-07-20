@@ -23,7 +23,7 @@ export const SearchInput = () => {
         url: pathname,
         query: {
           categoryId: currentCategoryId,
-          title: debouncedValue,
+          title: debouncedValue.toLowerCase(),
         },
       },
       { skipEmptyString: true, skipNull: true }
