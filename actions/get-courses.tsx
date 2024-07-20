@@ -53,10 +53,16 @@ export const getCourses = async ({
     const coursesWithProgress: CourseWithProgressWithCategory[] =
       await Promise.all(
         courses.map(async (course) => {
+          const wordsOfTitle = course.title.toString().split(" ");
+          let strTitle = "";
+          wordsOfTitle.forEach((word) => {
+            strTitle += word[0].toUpperCase() + word.slice(1) + " ";
+          });
+
           if (course.purchases.length === 0)
-            return { ...course, progress: null };
+            return { ...course, title: strTitle, progress: null };
           const progressPercent = await getProgress(userId, course.id);
-          return { ...course, progress: progressPercent };
+          return { ...course, title: strTitle, progress: progressPercent };
         })
       );
 

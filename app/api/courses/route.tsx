@@ -6,7 +6,8 @@ import { isTeacher } from "@/lib/teacher";
 export async function POST(req: Request) {
   try {
     const { userId } = auth();
-    const { title } = await req.json();
+    let { title } = await req.json();
+    title = await title.toString().toLowerCase();
 
     if (!userId || !isTeacher(userId))
       return new NextResponse("Unauthorized", { status: 401 });
