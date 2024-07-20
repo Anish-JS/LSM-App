@@ -16,8 +16,6 @@ const groupByCourse = (purchases: PurchaseWithCourse[]) => {
     grouped[courseTitle] += purchase.course.price!;
   });
 
-  console.log(grouped);
-
   return grouped;
 };
 
@@ -35,8 +33,6 @@ export const getAnalytics = async (userId: string) => {
 
     const totalRevenue = data.reduce((acc, curr) => acc + curr.total, 0);
     const totalSales = purchases.length;
-
-    console.log(data);
 
     return {
       data,

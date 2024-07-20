@@ -2,6 +2,7 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import { Card } from "@/components/ui/card";
+import { upperCaseTitle } from "@/lib/upper-case-title";
 
 interface ChartProps {
   data: {
@@ -11,10 +12,15 @@ interface ChartProps {
 }
 
 export const Chart = ({ data }: ChartProps) => {
+  // const courseLabel = upperCaseTitle(data.name);
+  const dataValues = data.map((dataItem) => {
+    const name = upperCaseTitle(dataItem.name);
+    return { ...dataItem, name: name };
+  });
   return (
     <Card>
       <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={data}>
+        <BarChart data={dataValues}>
           <XAxis
             dataKey="name"
             stroke="#888888"
