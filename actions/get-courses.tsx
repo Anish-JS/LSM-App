@@ -2,6 +2,7 @@ import { Category, Course } from "@prisma/client";
 
 import { getProgress } from "./get-progress";
 import { db } from "@/lib/db";
+import { upperCaseTitle } from "@/lib/upper-case-title";
 
 type CourseWithProgressWithCategory = Course & {
   category: Category | null;
@@ -53,16 +54,12 @@ export const getCourses = async ({
     const coursesWithProgress: CourseWithProgressWithCategory[] =
       await Promise.all(
         courses.map(async (course) => {
-          const wordsOfTitle = course.title.toString().split(" ");
-          let strTitle = "";
-          wordsOfTitle.forEach((word) => {
-            strTitle += word[0].toUpperCase() + word.slice(1) + " ";
-          });
+          // const title = upperCaseTitle(course.title.toString());
 
           if (course.purchases.length === 0)
-            return { ...course, title: strTitle, progress: null };
+            return { ...course, progress: null };
           const progressPercent = await getProgress(userId, course.id);
-          return { ...course, title: strTitle, progress: progressPercent };
+          return { ...course, progress: progressPercent };
         })
       );
 
