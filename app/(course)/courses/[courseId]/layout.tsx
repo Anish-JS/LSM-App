@@ -16,7 +16,7 @@ const CourseLayout = async ({
   if (!userId) return redirect("/");
 
   const course = await db.course.findUnique({
-    where: { id: params.courseId, userId },
+    where: { id: params.courseId },
     include: {
       chapters: {
         where: { isPublished: true },
@@ -32,7 +32,9 @@ const CourseLayout = async ({
     },
   });
 
-  if (!course) return redirect("/");
+  if (!course) {
+    return redirect("/");
+  }
 
   const progressCount = await getProgress(userId, params.courseId);
 
