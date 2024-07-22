@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Learning Management System (LMS) - Application
 
-## Getting Started
+This LMS application is built on Next.js and React and deployed on Vercel. This guided project includes all the features of a complete end-to-end LMS application with the added stripe integration. 
 
-First, run the development server:
+### This application consists of the following features:
+- Teacher Mode - Users of teacher mode can create, edit, and publish courses. Users of Teacher Mode can also add, delete, edit, and publish chapters to individual courses. Users in Teacher Mode can also access analytics to see how much each course has made in terms of revenue with graphical charts.
+- Student Mode - Consists of a dashboard that displays the enrolled courses as well as the student's progress. There is also a feature to browse other courses.
+- Search - Search functionality allows students and users of teacher mode to search and browse for published courses.
+- Authentication - SignIn, SignUp, and Logout functionality integrated with Clerk.
+- Progress tracker functionality
+- Filter courses - by category and using the search bar
+- Stripe Integration to manage payment
+- Chapter Reorder Functionality
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Technologies learned and used for building this application:
+  - Next.js and React.js
+  - Prisma ORM
+  - PostgreSQL
+  - Vercel
+  - Clerk
+  - UploadThings
+  - MUX Video processing
+  - TailwindCSS
+  - ShadCN
+  
